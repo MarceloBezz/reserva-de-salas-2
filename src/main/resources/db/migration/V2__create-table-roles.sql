@@ -1,0 +1,19 @@
+ALTER TABLE usuarios DROP COLUMN role;
+
+CREATE TABLE roles(
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE usuarios_roles(
+    usuario_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+
+    PRIMARY KEY(usuario_id, role_id),
+    CONSTRAINT USUARIOS_ROLES_FK_USUARIO FOREIGN KEY(usuario_id) REFERENCES usuarios(id),
+    CONSTRAINT USUARIOS_ROLES_FK_PERFIL FOREIGN KEY(role_id) REFERENCES roles(id)
+
+);
+
+INSERT INTO roles(nome) VALUES('CLIENTE');
+INSERT INTO roles(nome) VALUES('ADMIN');
