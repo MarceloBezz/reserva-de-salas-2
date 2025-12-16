@@ -10,9 +10,9 @@ import java.util.List;
 
 @FeignClient("servico-sala")
 public interface SalaClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/sala/buscar/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/buscar/{id}")
     DadosSala buscarSalaPorId(@PathVariable Long id);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/sala/todas/ids")
+    @RequestMapping(method = RequestMethod.GET, value = "/todas/ids")
     List<Long> buscarSalasAtivas();
 }

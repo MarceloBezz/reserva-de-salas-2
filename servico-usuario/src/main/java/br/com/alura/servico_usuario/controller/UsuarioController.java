@@ -1,6 +1,5 @@
 package br.com.alura.servico_usuario.controller;
 
-import br.com.alura.servico_usuario.model.Usuario.UsuarioDTO;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.alura.servico_usuario.model.Usuario.UsuarioCadastroDTO;

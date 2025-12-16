@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("/reserva")
 public class ReservaController {
     @Autowired
     private ReservaService service;

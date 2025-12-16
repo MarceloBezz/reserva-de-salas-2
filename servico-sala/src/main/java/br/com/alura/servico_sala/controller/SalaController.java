@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("/sala")
 public class SalaController {
 
     @Autowired
