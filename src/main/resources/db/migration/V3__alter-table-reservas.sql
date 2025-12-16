@@ -1,2 +1,0 @@
-ALTER TABLE reservas ADD COLUMN quantidade INT NOT NULL;
-ALTER TABLE reservas ADD COLUMN status VARCHAR(20) NOT NULL;
