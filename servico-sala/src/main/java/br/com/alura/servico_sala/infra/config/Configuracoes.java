@@ -27,6 +27,7 @@ public class Configuracoes {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(req -> {
+                    req.requestMatchers(HttpMethod.GET, "/sala/**").permitAll();
                     req.requestMatchers(HttpMethod.PATCH, "/sala/desativar/**").hasRole("ADMIN");
                     req.anyRequest().authenticated();
                 })

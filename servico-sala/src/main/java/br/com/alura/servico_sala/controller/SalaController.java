@@ -43,15 +43,15 @@ public class SalaController {
         return ResponseEntity.ok().body(sala);
     }
 
-//    @GetMapping("/disponiveis")
-//    public ResponseEntity<List<DadosSala>> buscarSalasDisponiveisPorHorario(@RequestBody HorarioSalaDTO dados) {
-//        var salasDisponiveis = service.listarSalasDisponiveis(dados);
-//        return ResponseEntity.ok().body(salasDisponiveis);
-//    }
-
     @GetMapping("/todas")
     public ResponseEntity<List<DadosSala>> buscarSalas() {
         var salas = service.buscarSalas();
+        return ResponseEntity.ok().body(salas);
+    }
+
+    @GetMapping("/todas/ids")
+    public ResponseEntity<List<Long>> buscarIdsSalas() {
+        var salas = service.buscarIdsSalas();
         return ResponseEntity.ok().body(salas);
     }
 

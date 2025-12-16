@@ -4,15 +4,12 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
+import br.com.alura.servico_reserva.model.Reserva.*;
 import br.com.alura.servico_reserva.model.sala.DadosSala;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.servico_reserva.infra.exception.RegraDeNegocioException;
-import br.com.alura.servico_reserva.model.Reserva.DadosReserva;
-import br.com.alura.servico_reserva.model.Reserva.Reserva;
-import br.com.alura.servico_reserva.model.Reserva.ReservaDTO;
-import br.com.alura.servico_reserva.model.Reserva.ReservaStatus;
 import br.com.alura.servico_reserva.model.usuario.Usuario;
 import br.com.alura.servico_reserva.repository.ReservaRepository;
 import br.com.alura.servico_reserva.validacoes.IValidacaoReserva;
@@ -78,5 +75,14 @@ public class ReservaService {
             throw new RegraDeNegocioException("Esta reserva já está cancelada!");
 
         reserva.setStatus(ReservaStatus.CANCELADA);
+    }
+
+    public List<Long> listarReservasDisponiveis(HorarioReservaDTO dados) {
+        List<Long> idSalasAtivas = salaClient.buscarSalasAtivas();
+        List<Long> reservasOcupadas = repository.findReservasOcupadas(dados.inicio(), dados.fim());
+
+        return idSalasAtivas.stream()
+                .filter(id -> !reservasOcupadas.contains(id))
+                .toList();
     }
 }

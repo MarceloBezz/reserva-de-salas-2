@@ -1,5 +1,6 @@
 package br.com.alura.servico_reserva.controller;
 
+import br.com.alura.servico_reserva.model.Reserva.HorarioReservaDTO;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -51,6 +52,12 @@ public class ReservaController {
             @AuthenticationPrincipal Usuario usuario) {
         var reservas = service.buscarTodasReservas(usuario);
         return ResponseEntity.ok().body(reservas);
+    }
+
+    @GetMapping("/disponiveis")
+    public ResponseEntity<List<Long>> verReservasDisponiveis(@RequestBody HorarioReservaDTO horarios) {
+        var reservasDisponiveis = service.listarReservasDisponiveis(horarios);
+        return  ResponseEntity.ok().body(reservasDisponiveis);
     }
 
     @PatchMapping("/cancelar/{id}")

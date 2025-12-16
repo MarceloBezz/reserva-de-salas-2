@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @FeignClient("servico-sala")
 public interface SalaClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/salas/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/sala/buscar/{id}")
     DadosSala buscarSalaPorId(@PathVariable Long id);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/sala/todas/ids")
+    List<Long> buscarSalasAtivas();
 }

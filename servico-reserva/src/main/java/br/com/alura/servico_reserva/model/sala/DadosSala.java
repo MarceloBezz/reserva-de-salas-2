@@ -7,7 +7,4 @@ public record DadosSala(
     int capacidade,
     boolean ativa
 ) {
-//    public DadosSala(Sala sala) {
-//        this(sala.getId(), sala.getNome(), sala.getDescricao(), sala.getCapacidade(),sala.isAtiva());
-//    }
 }

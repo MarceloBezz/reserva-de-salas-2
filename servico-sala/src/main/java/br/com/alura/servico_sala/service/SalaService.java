@@ -23,11 +23,6 @@ public class SalaService {
         return repository.save(sala);
     }
 
-//    public List<DadosSala> listarSalasDisponiveis(HorarioSalaDTO dados) {
-//        List<Sala> salas = repository.findSalasDisponiveis(dados.inicio(), dados.fim());
-//        return salas.stream().map(DadosSala::new).toList();
-//    }
-
     @Transactional
     public void desativarSala(Long id) {
         Sala sala = repository.findById(id)
@@ -37,7 +32,7 @@ public class SalaService {
 
     public List<DadosSala> buscarSalas() {
         return repository
-                .findAll()
+                .findAllByAtivaTrue()
                 .stream()
                 .map(DadosSala::new)
                 .toList();
@@ -47,5 +42,9 @@ public class SalaService {
         Sala sala = repository.findById(id)
                 .orElseThrow(() -> new RegraDeNegocioException("Forneça um id válido!"));
         return new DadosSala(sala);
+    }
+
+    public List<Long> buscarIdsSalas() {
+        return repository.findAllIds();
     }
 }
