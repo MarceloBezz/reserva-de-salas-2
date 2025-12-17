@@ -1,6 +1,7 @@
 package br.com.alura.servico_reserva.controller;
 
 import br.com.alura.servico_reserva.model.Reserva.HorarioReservaDTO;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,6 +30,9 @@ public class ReservaController {
     @Autowired
     private ReservaService service;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
     @PostMapping("/agendar")
     public ResponseEntity<String> agendarReserva(@RequestBody @Valid ReservaDTO dto,
             @AuthenticationPrincipal Usuario usuario, UriComponentsBuilder uriBuilder) {
@@ -36,6 +40,10 @@ public class ReservaController {
         URI uri = uriBuilder.path("/reserva/{idReserva}")
                 .buildAndExpand(reserva.getId())
                 .toUri();
+
+        // Envio da reserva para a Exchange reservas.ex
+        rabbitTemplate.convertAndSend("reservas.ex", "", reserva);
+
         return ResponseEntity.created(uri).body("Reserva de sala concluída!");
     }
 
