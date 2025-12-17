@@ -48,4 +48,10 @@ public class UsuarioService implements UserDetailsService {
                 .orElseThrow(() -> new Exception("Email inválido!"));
         return new UsuarioDTO(usuario);
     }
+
+    public DadosUsuarioEmail buscaPorId(Long id) throws Exception {
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() -> new Exception("ID inválido!"));
+        return new DadosUsuarioEmail(usuario);
+    }
 }

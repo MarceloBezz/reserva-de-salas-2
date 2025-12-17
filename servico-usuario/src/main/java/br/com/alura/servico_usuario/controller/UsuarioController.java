@@ -34,5 +34,14 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    
+
+    @GetMapping("/busca-id/{id}")
+    public ResponseEntity<Object> buscaPorId(@PathVariable Long id) {
+        try {
+            var usuario = service.buscaPorId(id);
+            return ResponseEntity.ok().body(usuario);
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

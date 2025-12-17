@@ -1,5 +1,6 @@
 package br.com.alura.servico_reserva.controller;
 
+import br.com.alura.servico_reserva.model.Reserva.DadosReservaEmail;
 import br.com.alura.servico_reserva.model.Reserva.HorarioReservaDTO;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +43,7 @@ public class ReservaController {
                 .toUri();
 
         // Envio da reserva para a Exchange reservas.ex
-        rabbitTemplate.convertAndSend("reservas.ex", "", reserva);
+        rabbitTemplate.convertAndSend("reservas.ex", "", new DadosReservaEmail(reserva));
 
         return ResponseEntity.created(uri).body("Reserva de sala concluída!");
     }
