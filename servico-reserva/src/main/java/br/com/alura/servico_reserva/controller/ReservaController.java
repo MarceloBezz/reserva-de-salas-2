@@ -2,7 +2,9 @@ package br.com.alura.servico_reserva.controller;
 
 import br.com.alura.servico_reserva.model.Reserva.DadosReservaEmail;
 import br.com.alura.servico_reserva.model.Reserva.HorarioReservaDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -27,12 +29,16 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
+@RequiredArgsConstructor
 public class ReservaController {
     @Autowired
     private ReservaService service;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private final KafkaTemplate<String, DadosReserva> kafkaTemplate;
 
     @PostMapping("/agendar")
     public ResponseEntity<String> agendarReserva(@RequestBody @Valid ReservaDTO dto,
@@ -44,6 +50,8 @@ public class ReservaController {
 
         // Envio da reserva para a Exchange reservas.ex
         rabbitTemplate.convertAndSend("reservas.ex", "", new DadosReservaEmail(reserva));
+        // Envio dos dados de reserva para o serviço de log
+        kafkaTemplate.send("reserva-topic", String.valueOf(reserva.getId()), new DadosReserva(reserva, usuario.getId(), reserva.getSalaId()));
 
         return ResponseEntity.created(uri).body("Reserva de sala concluída!");
     }

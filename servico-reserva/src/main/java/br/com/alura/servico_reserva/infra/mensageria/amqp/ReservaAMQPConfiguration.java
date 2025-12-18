@@ -1,4 +1,4 @@
-package br.com.alura.servico_reserva.amqp;
+package br.com.alura.servico_reserva.infra.mensageria.amqp;
 
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
