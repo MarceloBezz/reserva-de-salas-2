@@ -147,7 +147,7 @@ Microsserviço de reservas:
 
 Subir dependências:
 
-``docker-compose up -d``
+```docker-compose up -d```
 
 Acessar a URL base do gateway:
 
